@@ -1,0 +1,11 @@
+---
+- name: set facts
+  hosts: all
+  connection: local
+  tasks:
+    - set_fact:
+        myvar: "{{ lookup('jsonnet', 'doc.jsonnet', ext_vars=ext_vars) }}"
+      vars:
+        ext_vars:
+          avar: '42'  # external variables for jsonnet must be strings
+          anothervar: "{{ ansible_architecture }}"
