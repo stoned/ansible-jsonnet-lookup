@@ -94,9 +94,9 @@ class LookupModule(LookupBase):
             if lookupfile:
                 vars = variables.copy()
                 vars.update(generate_ansible_template_vars(lookupfile))
+                self._templar.set_available_variables(vars)
 
                 def ansible_expr(expr):
-                    self._templar.set_available_variables(vars)
                     return self._templar.template(expr, convert_bare=True, bare_deprecated=False)
 
                 native_callbacks = {
