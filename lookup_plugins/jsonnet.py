@@ -83,7 +83,6 @@ class LookupModule(LookupBase):
             raise AnsibleError(
                 "Requires the _jsonnet Python package. Try `pip install jsonnet`")
 
-        lookup_template_vars = kwargs.get('template_vars', {})
         ret = []
 
         for term in terms:
@@ -95,7 +94,6 @@ class LookupModule(LookupBase):
             if lookupfile:
                 vars = variables.copy()
                 vars.update(generate_ansible_template_vars(lookupfile))
-                vars.update(lookup_template_vars)
 
                 def ansible_expr(expr):
                     self._templar.set_available_variables(vars)
