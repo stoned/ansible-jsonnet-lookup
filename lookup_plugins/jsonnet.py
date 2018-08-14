@@ -109,6 +109,6 @@ class LookupModule(LookupBase):
                 ret.append(res)
             else:
                 raise AnsibleError(
-                    "the template file %s could not be found for the lookup" % term)
+                    "the Jsonnet document file %s could not be found for the lookup" % term)
 
         return ret
