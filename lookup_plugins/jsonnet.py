@@ -12,21 +12,50 @@ DOCUMENTATION = """
     version_added: "2.7"
     short_description: retrieve contents of file after templating with Jsonnet
     description:
-      - XXX
-      - XXX
+      - The jsonnet lookup returns templated Jsonnet documents. The
+        documents are looked up like regular template files.
+      - Any Jinja2 expression can be evaluated from the Jsonnet document,
+        hence any Ansible variable's value is available, with the provided
+        "native" function ```ansible_expr```. It takes one argument,
+        a Jinja2 expression, as a string, and returns its evaluation.
+        The Jinja2 expression can be a bare string.
     options:
       _terms:
-        description: list of files to template
+        description:
+          - List of files to process.
+      ext_vars:
+        description:
+          - A mapping for key and string values defining so called
+            "external variables" for the Jsonnet processing.
+          -  cf. https://jsonnet.org/learning/tutorial.html
+      "ext_codes, tla_vars, tla_codes, max_trace, max_stack, gc_min_objects, gc_growth_trigger":
+         description:
+           - Other keyword arguments supported by Jsonnet Python API.
+           - cf. https://jsonnet.org/ref/bindings.html
 """
 
 EXAMPLES = """
 - name: show templating results
-  debug: msg="{{ lookup('jsonnet', 'some_template.jsonnet') }}
+  debug: msg="{{ lookup('jsonnet', 'some_template.jsonnet') }}"
+
+- name: set facts from json produced by jsonnet
+  set_fact: myvar="{{ lookup('jsonnet', 'some_template.jsonnet') }}"
+
+- name: set facts from json produced by jsonnet with external variables provided
+  set_fact: myvar="{{ lookup('jsonnet', 'some_template.jsonnet', ext_vars=a_mapping) }}"
+  vars:
+    a_mapping:
+      var1: value1
+      var2: value2
+
+# Examples of Jinja2 expression evaluation in Jsonnet document:
+#  std.native("ansible_expr")("{{ 1 + 1 }}")
+#  std.native("ansible_expr")("ansible_all_ipv4_addresses")
 """
 
 RETURN = """
 _raw:
-   description: file(s) content after templating
+   description: Jsonnet document after processing
 """
 
 from ansible.errors import AnsibleError
