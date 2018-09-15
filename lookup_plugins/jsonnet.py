@@ -19,6 +19,8 @@ DOCUMENTATION = """
         "native" function ```ansible_expr```. It takes one argument,
         a Jinja2 expression, as a string, and returns its evaluation.
         The Jinja2 expression can be a bare string.
+    requirements:
+      - jsonnet (python library https://pypi.org/project/jsonnet/)
     options:
       _terms:
         description:
