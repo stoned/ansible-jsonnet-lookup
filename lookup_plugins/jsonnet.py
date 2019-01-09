@@ -99,7 +99,7 @@ class LookupModule(LookupBase):
                 self._templar.set_available_variables(vars)
 
                 def ansible_expr(expr):
-                    return self._templar.template(expr, convert_bare=True, bare_deprecated=False)
+                    return self._templar.template(expr, convert_bare=True)
 
                 native_callbacks = {
                     'ansible_expr': (('expr',), ansible_expr),
