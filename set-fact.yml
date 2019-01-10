@@ -9,3 +9,5 @@
         ext_vars:
           avar: '42'  # external variables for jsonnet must be strings
           anothervar: "{{ ansible_architecture }}"
+    - debug:
+        var: myvar
